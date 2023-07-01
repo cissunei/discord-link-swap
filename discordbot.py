@@ -32,5 +32,13 @@ async def on_message(message):
     if "instagram.com" in message.content:
         new_ig = message.content.replace("instagram.com", "ddinstragram.com")
         await message.channel.send(f"Here's the modified link: {new_ig}") 
+    
+@client.event
+async def on_error(event, *args, **kwargs):
+    with open('err.log', 'a') as f:
+        if event == 'on_message':
+            f.write(f'Unhandled message: {args[0]}\n')
+        else:
+            raise
 
 client.run(token)
